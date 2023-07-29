@@ -12,22 +12,27 @@
   <body>
     <div class="scores"><a href="highscores.html">View Highscores</a></div>
 
-    <div class="timer">Time:(00: <span id="time">00</span>)</div>
+    <div class="timer">Time: <span id="time">00</span></div>
 
     <div class="wrapper">
       <div id="start-screen" class="start">
         <h1>Coding Quiz Challenge</h1>
         <p>
           Try to answer the following code-related questions within the time
-          limit. Keep in mind that incorrect answers will penalize your
+          limit. Keep in mind that incorrect answers will penalise your
           score/time by ten seconds!
         </p>
         <button id="start">Start Quiz</button>
       </div>
 
       <div id="questions" class="hide">
-        <h2 id="question-title"></h2>
-        <div id="choices" class="choices"></div>
+        <h2 id="question-title">q</h2>
+        <div id="choices" class="choices">
+          <button id="choice1">c</button>
+          <button id="choice2">c</button>
+          <button id="choice3">c</button>
+          <button id="choice4">c</button>
+        </div>
       </div>
 
       <div id="end-screen" class="hide">
