@@ -1,3 +1,5 @@
+// Quiz questions and answers
+
 var questionsArray = [
   {
     questionText: "Which of these is NOT a programming language?",
