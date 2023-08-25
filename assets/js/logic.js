@@ -38,7 +38,7 @@ function startTimer() {
   var countdown = setInterval(function () {
     timeRemaining--;
     clockTimer.textContent = timeRemaining;
-    if (timeRemaining === 0 || currentQuestion === questions.length) {
+    if (timeRemaining === 0 || questionDisplayed === questions.length) {
       clearInterval(countdown);
       endGame();
     }
