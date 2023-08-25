@@ -1,18 +1,5 @@
 // List variables and add document query selectors
-
-// Time-related - add 60-second countdown clock
-var timeRemaining = 60;
 var clockTimer = document.getElementById("timer");
-var timerId = setInterval(countdown, 1000);
-function countdown() {
-  if (timeRemaining <= 0) {
-    endGame();
-    //Include showing the end screen
-  } else {
-    clockTimer.innerHTML = timeRemaining;
-    timeRemaining--;
-  }
-}
 //Starting the quiz
 var startDiv = document.getElementById("start-screen");
 var startBtn = document.getElementById("start");
@@ -21,6 +8,7 @@ var startBtn = document.getElementById("start");
 var questionsDiv = document.getElementById("questions");
 var answerChoices = document.getElementsByClassName("choice");
 var questionDisplayed = document.getElementById("question-title");
+var feedbackDiv = document.getElementById("feedback");
 var currentQuestion = questionsArray[questionIndex];
 var questionIndex = 0;
 var questionPosition = -1;
@@ -39,18 +27,30 @@ var finalScore = document.getElementById("final-score");
 
 // Player starts game by clicking start button
 var startGame = function () {
-  countdown();
+  timeRemaining = 60;
   startDiv.classList.add("hide"); // adds the "hide" class
   questionsDiv.classList.remove("hide"); // removes the "hide" class
   showQuestions();
+  startTimer();
 };
+
+function startTimer() {
+  var countdown = setInterval(function () {
+    timeRemaining--;
+    clockTimer.textContent = timeRemaining;
+    if (timeRemaining === 0 || currentQuestion === questions.length) {
+      clearInterval(countdown);
+      endGame();
+    }
+  }, 1000);
+}
 
 // Questions are displayed
 var showQuestions = function () {
   var currentQuestion = questionsArray[questionIndex];
   var questPrompt = document.getElementById("question-title");
   questPrompt.textContent = currentQuestion.questionText;
-  for (let i = 0; i < answerChoices.length; i++) {
+  for (var i = 0; i < answerChoices.length; i++) {
     answerChoices[i].innerText = currentQuestion.choices[i];
 
     //Adding an event listener for each for each button
@@ -68,8 +68,8 @@ var showQuestions = function () {
 // Check that the text in the button matches the text in the correct answer.
 // If they get it right, move to the next question, if it's wrong, minus 10 off the time
 function handleAnswer(event) {
-  console.log("Are they being moved here");
   var correctAnswers = "Klingon" || "()" || "loop";
+  // Think might have to do a for loop here instead
   if (event.target.textContent === correctAnswers) {
     feedback.innerHTML += "Correct! You definitely know your stuff!";
     nextQuestion();
@@ -81,8 +81,9 @@ function handleAnswer(event) {
   }
 }
 
+//Need to sort out clearing the innerHTML
+
 function nextQuestion() {
-  console.log("Clicked on the right answer");
   questionPosition++;
   if (questionPosition === questionsArray.length) {
     timeRemaining = 0;
@@ -93,34 +94,11 @@ function nextQuestion() {
   }
 }
 
-// Check that the text for the answer matches the answer in the currentQuestion
-//If the answer is wrong, subtract 10 from the time
-//Do I need to create a variable for user answer?
-//if (this.value !== correctAnswers) {
-//If the answer is right, show the next question
-//} else {
-//showQuestions();
-//questionIndex++;
-//}
-
-//Give user feedback on their answer - correct/incorrect
-//var answerFeedback = getElementById("feedback");
-//answerFeedback.textContent = "Sorry, that's wrong!";
-//answerFeedback.textContent = "Nice work!";
-
-//Dealing with the clock timer. Need moving up?
-//if (timeRemaining < 0) {
-//timeRemaining = 0;
-//clockTimer.textContent = timeRemaining;
-//Once run out of questions, end game
-//} else if (questionIndex === questionsArray.length) {
-//endGame();
-//}
-
-//Need to show end screen
+// Need to show end screen with initials form and submit button
 var endGame = function () {
-  clearInterval(timerId);
-  prompt("Time is up");
+  endScreen.classList.remove("hide");
+  questionsDiv.classList.add("hide");
+  feedbackDiv.classList.add("hide");
 };
 
 // event listeners
