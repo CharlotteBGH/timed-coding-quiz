@@ -23,7 +23,7 @@ var questionsArray = [
     correctAnswer: "DRY",
   },
   {
-    questionText: "'Var quiz = false;'. This is an example of a ____ value",
+    questionText: "'Var quiz = false'. This is an example of a ____ value",
     choices: ["object", "Boolean", "jQuery", "array"],
     correctAnswer: "Boolean",
   },
@@ -32,5 +32,10 @@ var questionsArray = [
       "Which brackets would you use to list the properties and values of a variable?",
     choices: ["{ }", "[ ]", "( )", "< >"],
     correctAnswer: "{ }",
+  },
+  {
+    questionText: "Which of these is a strict equal?",
+    choices: ["=", "+=", "==", "==="],
+    correctAnswer: "===",
   },
 ];

@@ -24,6 +24,8 @@ var seeHighScores = document.getElementById("scores");
 //Ending the game
 var endScreen = document.getElementById("end-screen");
 var finalScore = document.getElementById("final-score");
+var highScores = JSON.parse(localStorage.getItem("high-scores"));
+localStorage.setItem("high-scores", JSON.stringify([]));
 
 // Player starts game by clicking start button
 var startGame = function () {
@@ -93,16 +95,14 @@ function handleAnswer(event) {
   }
   nextQuestion();
 }
-//Need to sort out clearing the innerHTML
 
 function nextQuestion() {
-  questionPosition++;
-  if (questionPosition === questionsArray.length) {
-    timeRemaining = 0;
-    endGame();
-  } else {
+  if (questionPosition <= questionsArray.length) {
     questionIndex++;
     showQuestions();
+  } else {
+    clearInterval(countdown);
+    endGame();
   }
 }
 
@@ -111,6 +111,7 @@ var endGame = function () {
   endScreen.classList.remove("hide");
   questionsDiv.classList.add("hide");
   feedbackDiv.classList.add("hide");
+  finalScore.textContent = currentScore;
 };
 
 // event listeners
