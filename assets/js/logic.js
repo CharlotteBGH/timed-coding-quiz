@@ -73,19 +73,26 @@ function handleAnswer(event) {
     questionsArray[questionIndex].correctAnswer.toString() ===
     event.target.textContent
   ) {
-    feedback.innerHTML += "Correct! You definitely know your stuff!";
+    feedback.classList.remove("hide");
+    feedback.textContent = "Correct! You definitely know your stuff!";
+    toggleFeedback = setTimeout(function () {
+      feedback.classList.add("hide");
+      clearTimeout(toggleFeedback);
+    }, 2800);
+    currentScore++;
     nextQuestion();
   } else {
+    feedback.classList.remove("hide");
     timeRemaining -= 10;
-    feedback.innerHTML +=
+    feedback.textContent =
       "Close, but that is incorrect. Keep going - you've got this!";
-    nextQuestion();
+    toggleFeedback = setTimeout(function () {
+      feedback.classList.add("hide");
+      clearTimeout(toggleFeedback);
+    }, 2800);
   }
+  nextQuestion();
 }
-
-// Check that the text in the button matches the text in the correct answer.
-// If they get it right, move to the next question, if it's wrong, minus 10 off the time
-
 //Need to sort out clearing the innerHTML
 
 function nextQuestion() {
