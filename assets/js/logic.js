@@ -17,7 +17,7 @@ var questionPosition = -1;
 var currentScore = 0;
 
 //Submitting initials and scores
-var initials = document.getElementById("initials");
+var initialsDiv = document.getElementById("initials");
 var submitBtn = document.getElementById("submit");
 var seeHighScores = document.getElementById("scores");
 
@@ -27,9 +27,11 @@ var finalScore = document.getElementById("final-score");
 var highScores = JSON.parse(localStorage.getItem("high-scores"));
 localStorage.setItem("high-scores", JSON.stringify([]));
 
+//CODE FOR GOING THROUGH QUIZ
+
 // Player starts game by clicking start button
 var startGame = function () {
-  timeRemaining = 60;
+  timeRemaining = 40;
   startDiv.classList.add("hide"); // adds the "hide" class
   questionsDiv.classList.remove("hide"); // removes the "hide" class
   showQuestions();
@@ -76,18 +78,16 @@ function handleAnswer(event) {
     event.target.textContent
   ) {
     feedback.classList.remove("hide");
-    feedback.textContent = "Correct! You definitely know your stuff!";
+    feedback.textContent = "Correct!";
     toggleFeedback = setTimeout(function () {
       feedback.classList.add("hide");
       clearTimeout(toggleFeedback);
     }, 2800);
     currentScore++;
-    nextQuestion();
   } else {
     feedback.classList.remove("hide");
     timeRemaining -= 10;
-    feedback.textContent =
-      "Close, but that is incorrect. Keep going - you've got this!";
+    feedback.textContent = "Close, but that is incorrect.";
     toggleFeedback = setTimeout(function () {
       feedback.classList.add("hide");
       clearTimeout(toggleFeedback);
@@ -114,6 +114,23 @@ var endGame = function () {
   finalScore.textContent = currentScore;
 };
 
+// Allow user to submit initials, and store these in local storage
+
+function submitInitials() {
+  var userInitials = initialsDiv.value.trim();
+  if (userInitials === "") {
+    return alert("Woah! Please enter your initials to save your highscore.");
+  } else if (userInitials.length > 4) {
+    return alert(
+      "Your potential isn't limited, but your initials are (to 4). Please try again."
+    );
+  }
+  highScores.push({ currentScore, initials: userInitials.toUpperCase() });
+  localStorage.setItem("high-scores", JSON.stringify(highScores));
+  window.location.href = "highscores.html";
+}
+
 // event listeners
 startBtn.addEventListener("click", startGame);
-submitBtn.addEventListener("click", endGame);
+questionsDiv.addEventListener("click", nextQuestion);
+submitBtn.addEventListener("click", submitInitials);
