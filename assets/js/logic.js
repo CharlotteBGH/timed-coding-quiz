@@ -67,10 +67,12 @@ var showQuestions = function () {
 
 // Check that the text in the button matches the text in the correct answer.
 // If they get it right, move to the next question, if it's wrong, minus 10 off the time
+
 function handleAnswer(event) {
-  var correctAnswers = "Klingon" || "()" || "loop";
-  // Think might have to do a for loop here instead
-  if (event.target.textContent === correctAnswers) {
+  if (
+    questionsArray[questionIndex].correctAnswer.toString() ===
+    event.target.textContent
+  ) {
     feedback.innerHTML += "Correct! You definitely know your stuff!";
     nextQuestion();
   } else {
@@ -80,6 +82,9 @@ function handleAnswer(event) {
     nextQuestion();
   }
 }
+
+// Check that the text in the button matches the text in the correct answer.
+// If they get it right, move to the next question, if it's wrong, minus 10 off the time
 
 //Need to sort out clearing the innerHTML
 
