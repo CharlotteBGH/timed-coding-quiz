@@ -42,7 +42,7 @@ function startTimer() {
   var countdown = setInterval(function () {
     timeRemaining--;
     clockTimer.textContent = timeRemaining;
-    if (timeRemaining === 0 || questionDisplayed === questions.length) {
+    if (timeRemaining === 0 || questionIndex === questionsArray.length) {
       clearInterval(countdown);
       endGame();
     }
@@ -79,6 +79,8 @@ function handleAnswer(event) {
   ) {
     feedback.classList.remove("hide");
     feedback.textContent = "Correct!";
+    var correctSound = new Audio("./assets/sfx/correct.wav");
+    correctSound.play();
     toggleFeedback = setTimeout(function () {
       feedback.classList.add("hide");
       clearTimeout(toggleFeedback);
@@ -88,6 +90,8 @@ function handleAnswer(event) {
     feedback.classList.remove("hide");
     timeRemaining -= 10;
     feedback.textContent = "Close, but that is incorrect.";
+    var wrongSound = new Audio("./assets/sfx/incorrect.wav");
+    wrongSound.play();
     toggleFeedback = setTimeout(function () {
       feedback.classList.add("hide");
       clearTimeout(toggleFeedback);
