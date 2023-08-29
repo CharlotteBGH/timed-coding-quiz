@@ -11,7 +11,6 @@ var questionDisplayed = document.getElementById("question-title");
 var feedbackDiv = document.getElementById("feedback");
 var currentQuestion = questionsArray[questionIndex];
 var questionIndex = 0;
-var questionPosition = -1;
 
 //Scores
 var currentScore = 0;
@@ -31,7 +30,7 @@ localStorage.setItem("high-scores", JSON.stringify([]));
 
 // Player starts game by clicking start button
 var startGame = function () {
-  timeRemaining = 40;
+  timeRemaining = 60;
   startDiv.classList.add("hide"); // adds the "hide" class
   questionsDiv.classList.remove("hide"); // removes the "hide" class
   showQuestions();
@@ -42,7 +41,7 @@ function startTimer() {
   var countdown = setInterval(function () {
     timeRemaining--;
     clockTimer.textContent = timeRemaining;
-    if (timeRemaining === 0 || questionIndex === questionsArray.length) {
+    if (timeRemaining === 0 || questionIndex === questionsArray.length - 1) {
       clearInterval(countdown);
       endGame();
     }
@@ -101,7 +100,7 @@ function handleAnswer(event) {
 }
 
 function nextQuestion() {
-  if (questionPosition <= questionsArray.length) {
+  if (questionIndex < questionsArray.length) {
     questionIndex++;
     showQuestions();
   } else {
@@ -136,5 +135,4 @@ function submitInitials() {
 
 // event listeners
 startBtn.addEventListener("click", startGame);
-questionsDiv.addEventListener("click", nextQuestion);
 submitBtn.addEventListener("click", submitInitials);
